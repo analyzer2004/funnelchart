@@ -221,9 +221,12 @@ class FunnelChart {
                 .text(`${first[this._field.stage]} = ${d3.format(".3s")(first[this._field.value])}`);
         }
 
+        const data = this._chartData
+            .filter(d => this._y(d.ve) - this._y(d.vs) > this._charBox.height);
+
         const labels = this._g
             .selectAll("label")
-            .data(this._chartData)
+            .data(data)
             .join("g")
             .attr("class", "label")
             .attr("font-size", this._font.size.label)
@@ -278,7 +281,11 @@ class FunnelChart {
     }
 
     _renderNumbers(target, t) {        
-        target.call(g => {
+        const ah = this._options.showPercentage ? this._charBox.height * 2 : this._charBox.height;
+        const filtered = target
+            .filter(d => this._y(d.ve) - this._y(d.vs) > ah);
+
+        filtered.call(g => {
             g
                 .append("text")
                 .attr("fill", "white")
