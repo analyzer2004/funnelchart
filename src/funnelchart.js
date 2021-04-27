@@ -106,16 +106,19 @@ class FunnelChart {
 
     _init() {
         this._streamlined = this._options.streamlined;
-
+        
         this._hw = this._width / 2;
         this._funnelWidth.max = this._width * 0.65;
 
+        this._funnelWidth.min = this._width * 0.15;
+        /*
         const ext = this._data.map(d => d.value);
         if (this._streamlined)
             this._funnelWidth.min = this._width * 0.15;
         else {
             this._funnelWidth.min = this._funnelWidth.max * ext[ext.length - 1] / ext[0];
         }
+        */
 
         this._textBox = this._container
             .append("text")
